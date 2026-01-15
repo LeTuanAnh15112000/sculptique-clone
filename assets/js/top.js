@@ -1,12 +1,18 @@
 $(document).ready(function () {
   "use strict";
+  // handle selector block click
+  $(".selector_block").click(function () {
+    $(".selector_block.active").removeClass("active");
+    $(this).addClass("active");
+    const tab = $(this).data("tab");
+    $(".product_atc-refills").addClass("hidden");
+    $('.product_atc-refills[data-id="' + tab + '"]').removeClass("hidden");
+  });
 
-
-
-  $(".content_heading").click(function () {
-    $(this).parent().toggleClass("active");
-    $(this).parent().children(".content_text").slideToggle();
-    $(this).parent().children(".content_text").toggleClass("active");
+  // component content block click
+  $(".content_block").click(function () {
+    $(this).toggleClass("active");
+    $(this).children(".content_text").slideToggle();
   });
 
   // tab
