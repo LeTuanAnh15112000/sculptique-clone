@@ -561,9 +561,32 @@ body {
   max-width: 24px;
 }
 
+/* line */
 .line {
   background-color: var(--white-color);
   height: 35px;
+}
+
+/* trustBadge */
+.trustBadge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.trustBadge p {
+  line-height: 1.3em;
+  font-weight: 700;
+}
+
+.trustBadge span {
+  line-height: 0;
+}
+
+.trustBadge span img {
+  width: 24px;
+  object-fit: contain;
 }
 
 /* ------------------------------------------------------
@@ -1276,27 +1299,6 @@ Contents
   object-fit: contain;
 }
 
-#failed_solutions .solutions_note {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-}
-
-#failed_solutions .solutions_note p {
-  line-height: 1.3em;
-  font-weight: 700;
-}
-
-#failed_solutions .solutions_note span {
-  line-height: 0;
-}
-
-#failed_solutions .solutions_note span img {
-  width: 24px;
-  object-fit: contain;
-}
-
 #product_formula {
   background: #f3eee0;
   padding: 72px 0 66px;
@@ -1411,6 +1413,58 @@ Contents
 #product_formula .formula_summary img {
   width: 100%;
   object-fit: contain;
+}
+
+#faq {
+  padding: 56px 0;
+}
+
+#faq .faq_wrap {
+  width: 100%;
+  max-width: 824px;
+  margin: auto;
+  border-radius: 16px;
+  overflow: hidden;
+  padding: 32px;
+  background: linear-gradient(180deg, #fff, #f3eee0);
+}
+
+#faq .faq_box {
+  padding: 20px 24px;
+  cursor: pointer;
+  border-bottom: 1px solid white;
+}
+
+#faq .faq_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 18px;
+  line-height: 1.3em;
+  font-weight: 400;
+}
+
+#faq .faq_header span {
+  line-height: 0;
+  display: inline-block;
+  width: 16px;
+  transition: all .2s;
+}
+
+#faq .faq_header span svg {
+  width: 100%;
+  object-fit: contain;
+}
+
+#faq .faq_content {
+  display: none;
+  padding-top: 16px;
+}
+
+#faq .faq_content p {
+  margin: 0;
+  line-height: 1.3em;
 }
 
 /* ------------------------------------------------------

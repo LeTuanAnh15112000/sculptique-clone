@@ -15,6 +15,16 @@ $(document).ready(function () {
     $(this).children(".content_text").slideToggle();
   });
 
+  $(".formula_item").click(function () {
+    $(this).find(".formula_text").slideToggle();
+  });
+
+  $(".faq_box").click(function () {
+    $(this).toggleClass("active");
+    $(this).children(".faq_content").slideToggle();
+  });
+
+
   // tab
   // $(".tabs_item").each(function (index, tab) {
   //   tab.onclick = function () {
