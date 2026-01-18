@@ -1,78 +1,121 @@
 $(document).ready(function () {
   "use strict";
-  // handle selector block click
-  $(".selector_block").click(function () {
-    $(".selector_block.active").removeClass("active");
-    $(this).addClass("active");
-    const tab = $(this).data("tab");
-    $(".product_atc-refills").addClass("hidden");
-    $('.product_atc-refills[data-id="' + tab + '"]').removeClass("hidden");
+  // Popup handling
+  $(".js-popup").click(function(e) {
+    e.preventDefault();
+    $(".js-popup-section").removeClass("hidden");
   });
 
-  // component content block click
-  $(".content_block").click(function () {
-    $(this).toggleClass("active");
-    $(this).children(".content_text").slideToggle();
+  $(".js-close-popup").click(function() {
+    $(".js-popup-section").addClass("hidden");
   });
 
-  $(".formula_item").click(function () {
-    $(this).find(".formula_text").slideToggle();
-  });
-
-  $(".faq_box").click(function () {
-    $(this).toggleClass("active");
-    $(this).children(".faq_content").slideToggle();
-  });
-
-  var stories_slider = new Swiper("#stories_slider", {
-    speed: 500,
-    pagination: {
-      el: ".swiper-pagination",
-      type: "bullets",
-      clickable: true,
-      bulletClass: "swiper-pagination-bullet",
-      bulletActiveClass: "swiper-pagination-bullet-active",
-      renderBullet: function (index, className) {
-        // Show only 7 bullets: limit to items 0-6
-        if (index >= 7) return '';
-        return '<span class="' + className + '" data-slide="' + index + '"></span>';
-      }
-    },
-    slidesPerView: "auto",
-    spaceBetween: 0,
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    on: {
-      slideChange: function() {
-        // Keep track of which slide is active for pagination styling
-        document.querySelectorAll('.swiper-pagination-bullet').forEach((bullet, i) => {
-          if (i === this.realIndex) {
-            bullet.classList.add('swiper-pagination-bullet-active');
-          } else {
-            bullet.classList.remove('swiper-pagination-bullet-active');
-          }
-        });
-      }
+  $(".js-popup-section").click(function(e) {
+    if ($(e.target).hasClass("js-popup-section")) {
+      $(".js-popup-section").addClass("hidden");
     }
   });
 
-  var currentActiveVideo = null;
+  // Selector click
+  $(".js-selector").click(function () {
+    $(".js-selector.active").removeClass("active");
+    $(this).addClass("active");
+    const tab = $(this).data("tab");
+    $(".js-refills").addClass("hidden");
+    $('.js-refills[data-id="' + tab + '"]').removeClass("hidden");
+  });
 
-  $(".stories_video").click(function () {
+  // Content block toggle
+  $(".js-content-block").click(function () {
+    $(this).toggleClass("active");
+    $(this).children(".js-content-text").slideToggle();
+  });
+
+  // Formula item toggle
+  $(".js-formula-item").click(function () {
+    $(this).find(".js-formula-text").slideToggle();
+  });
+
+  // FAQ item toggle
+  $(".js-faq-item").click(function () {
+    $(this).toggleClass("active");
+    $(this).children(".js-faq-answer").slideToggle();
+  });
+
+
+  // Main slider
+  $('.slider-for').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    prevArrow: '<button class="slick-prev"><img src="./assets/images/icon-prev.png" alt="Prev"></button>',
+    nextArrow: '<button class="slick-next"><img src="./assets/images/icon-next.png" alt="Next"></button>',
+    infinite: true,
+    asNavFor: '.slider-nav',
+    autoplay: false,
+    speed: 500,
+    cssEase: 'ease-in-out'
+  });
+
+  $('.slider-nav').slick({
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    asNavFor: '.slider-for',
+    dots: false,
+    centerMode: false,
+    focusOnSelect: true,
+    infinite: true,
+    speed: 500,
+    arrows: false,
+    responsive: [
+      {
+        breakpoint: 676,
+        settings: {
+          slidesToShow: 4
+        }
+      },
+      
+    ]
+  });
+
+
+  // Stories slider
+  $('.js-stories-slider-main').slick({
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    infinite: false,
+    speed: 500,
+    cssEase: 'ease-in-out',
+    prevArrow: '.js-stories-prev',
+    nextArrow: '.js-stories-next',
+    dots: true,
+    appendDots: '.js-stories-dots',
+    customPaging: function(slider, i) {
+      return '<span class="js-dot-bullet block h-[4px] flex-1 bg-[#00000026] cursor-pointer transition-colors duration-200" data-slide="' + i + '"></span>';
+    },
+    responsive: [
+      {
+        breakpoint: 678,
+        settings: {
+          slidesToShow: 1.3,
+          slidesToScroll: 1,
+          infinite: false,
+        }
+      },
+    ]
+  });
+
+  // Stories video handling
+  var currentActiveVideo = null;
+  $(".js-stories-video").click(function () {
     var $this = $(this);
     var video = $this.find("video")[0];
-    
     if (!video) return;
-    
     // Check if current video is playing
     var isPlaying = !video.paused && video.currentTime > 0;
-    
     if (isPlaying) {
       // Click on playing video → pause it
       video.pause();
-      $this.find('.icon_play').show();
+      $this.find('.js-icon-play').show();
       $this.removeClass("active");
       currentActiveVideo = null;
     } else {
@@ -80,28 +123,15 @@ $(document).ready(function () {
       if (currentActiveVideo && currentActiveVideo !== video) {
         currentActiveVideo.pause();
         currentActiveVideo.currentTime = 0;
-        $(currentActiveVideo).closest('.stories_video').find('.icon_play').show();
-        $(currentActiveVideo).closest('.stories_video').removeClass("active");
+        $(currentActiveVideo).closest('.js-stories-video').find('.js-icon-play').show();
+        $(currentActiveVideo).closest('.js-stories-video').removeClass("active");
       }
-      
       // Reset current video and play
       video.currentTime = 0;
       video.play();
-      $this.find('.icon_play').hide();
+      $this.find('.js-icon-play').hide();
       $this.addClass("active");
       currentActiveVideo = video;
     }
   });
-
-  // tab
-  // $(".tabs_item").each(function (index, tab) {
-  //   tab.onclick = function () {
-  //     $(".tabs_item.active").removeClass("active");
-  //     $(".tabs_pane.active").removeClass("active");
-  //     this.classList.add("active");
-  //     const pane = $(".tabs_pane")[index];
-  //     pane.classList.add("active");
-  //   };
-  // });
-
 });
